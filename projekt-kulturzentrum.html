@@ -77,7 +77,9 @@
         .project-hero {
             height: 70vh;
             width: 100%;
-            background: url('Bilder/Bachelor_Frontbild.jpg') center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             display: flex;
             align-items: flex-end;
@@ -259,10 +261,10 @@
         </nav>
     </header>
 
-    <div class="project-hero">
+    <div class="project-hero" id="project-hero">
         <div class="hero-title-box">
-            <h1>Construction Innovation Center</h1>
-            <p>Competition Entry, Redesign & Modernization</p>
+            <h1 id="hero-title">Loading...</h1>
+            <p id="hero-subtitle">Loading...</p>
         </div>
     </div>
 
@@ -271,53 +273,33 @@
         <div class="project-meta-grid">
             <div class="meta-item">
                 <span>Typology</span>
-                <strong>Redesign & Modernization</strong>
+                <strong id="meta-typology">-</strong>
             </div>
             <div class="meta-item">
                 <span>Material</span>
-                <strong>Post-&-Beam Facade & Wooden Stack Ceiling</strong>
+                <strong id="meta-material">-</strong>
             </div>
             <div class="meta-item">
                 <span>Location</span>
-                <strong>Mosbach, Germany</strong>
+                <strong id="meta-location">-</strong>
             </div>
             <div class="meta-item">
                 <span>Year</span>
-                <strong>2025</strong>
+                <strong id="meta-year">-</strong>
             </div>
         </div>
 
         <!-- Konzepttext -->
-        <div class="project-story">
-            <p>
-                The task was a real project commisioned by the DHBW (Cooperative State University of Applied Sciences), which wanted to plan a new construction innovation center on its campus. The entire campus was also to be redesigned and modernized.
-            </p>
-            <p style="margin-top: 1.2rem;">
-                My design for the new Building Innovation Center of the DHBW in Mosbach marks the new milestone of the campus. With new work, teaching, and open spaces, it offers students and faculty flexible use. A post-and-beam facade on the north and east sides will provide a view into the building from the campus, while a more tranquil perforated facade on the south and west sides will provide a welcoming environment. The facade will be covered with climbing plants at the transition points.
-            </p>
-        </div>
+        <div class="project-story" id="project-story"></div>
 
         <!-- Bildgalerie: Pläne, Schnitte, Details -->
         <h2 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--wood-primary);">Drawings & Model Details</h2>
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <img src="Bilder/FINAL-1.jpg" alt="Site Plan & Concept">
-                <div class="gallery-caption">Site Plan & Concept</div>
-            </div>
-            <div class="gallery-card">
-                <img src="Bilder/FINAL-2.jpg" alt="Floor Plans & Elevations">
-                <div class="gallery-caption">Floor Plans & Elevations</div>
-            </div>
-            <div class="gallery-card">
-                <img src="Bilder/FINAL-3.jpg" alt="Construction & Materials">
-                <div class="gallery-caption">Construction & Materials</div>
-            </div>
-        </div>
+        <div class="gallery-grid" id="gallery-grid"></div>
 
         <!-- Weiterblättern -->
         <div class="project-nav">
             <a href="index.html">← back to home page</a>
-            <a href="projekt-pavillon.html">next project: Renovation of the Thannhausen Local History Museum →</a>
+            <a href="#" id="next-project-link">next project →</a>
         </div>
     </main>
 
@@ -327,28 +309,65 @@
         <img class="modal-content" id="modalImg" alt="Vergrößerte Ansicht">
     </div>
 
-    <!-- Interaktion mit JavaScript -->
+    <!-- Interaktion mit JavaScript: Daten aus content.json auslesen -->
     <script>
+        fetch('content.json')
+            .then(response => response.json())
+            .then(data => {
+                const detail = data.projectDetails.kulturzentrum;
+
+                // Hero setzen
+                document.getElementById('project-hero').style.backgroundImage = `url('${detail.heroImage}')`;
+                document.getElementById('hero-title').textContent = detail.title;
+                document.getElementById('hero-subtitle').textContent = detail.subtitle;
+
+                // Metadaten setzen
+                document.getElementById('meta-typology').textContent = detail.meta.typology;
+                document.getElementById('meta-material').textContent = detail.meta.material;
+                document.getElementById('meta-location').textContent = detail.meta.location;
+                document.getElementById('meta-year').textContent = detail.meta.year;
+
+                // Story / Beschreibung rendern
+                const storyContainer = document.getElementById('project-story');
+                storyContainer.innerHTML = detail.story.map((paragraph, index) => `
+                    <p ${index > 0 ? 'style="margin-top: 1.2rem;"' : ''}>${paragraph}</p>
+                `).join('');
+
+                // Galerie rendern
+                const galleryContainer = document.getElementById('gallery-grid');
+                galleryContainer.innerHTML = detail.gallery.map(item => `
+                    <div class="gallery-card">
+                        <img src="${item.src}" alt="${item.caption}">
+                        <div class="gallery-caption">${item.caption}</div>
+                    </div>
+                `).join('');
+
+                // Link für nächstes Projekt setzen
+                const nextLink = document.getElementById('next-project-link');
+                nextLink.href = detail.nextProjectLink;
+                nextLink.textContent = `next project: ${detail.nextProjectTitle} →`;
+
+                // Event-Listener für Galerie-Bilder (Lightbox) aktivieren
+                document.querySelectorAll('.gallery-card img').forEach(img => {
+                    img.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        modal.style.display = 'flex';
+                        modalImg.src = this.src;
+                        modalImg.alt = this.alt;
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading content.json:', error));
+
+        // Lightbox Zoom & Schließen Steuerung
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
 
-        // Klick auf Galerie-Bilder öffnet das Modal
-        document.querySelectorAll('.gallery-card img').forEach(img => {
-            img.addEventListener('click', function(e) {
-                e.stopPropagation();
-                modal.style.display = 'flex';
-                modalImg.src = this.src;
-                modalImg.alt = this.alt;
-            });
-        });
-
-        // Klick auf das geöffnete Bild schaltet den Zoom an/aus
         modalImg.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('zoomed');
         });
 
-        // Mausbewegung steuert den Bildausschnitt beim Zoomen
         modalImg.addEventListener('mousemove', function(e) {
             if (this.classList.contains('zoomed')) {
                 const rect = this.getBoundingClientRect();
@@ -358,14 +377,12 @@
             }
         });
 
-        // Funktion zum Schließen und Zoom-Rücksetzen
         function closeModal() {
             modal.style.display = 'none';
             modalImg.classList.remove('zoomed');
             modalImg.style.transformOrigin = 'center center';
         }
 
-        // Schließen per ESC-Taste
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
