@@ -53,3 +53,5 @@ HTML5 & CSS3 (Custom Properties, Flexbox, CSS Grid, Scroll Snap)
 Vanilla JavaScript (ES6+) (Fetch API, DOM Manipulation)
 
 Google Fonts (Cinzel for headings, Plus Jakarta Sans for modern body typography)
+
+https://jenso23.github.io/architecture-portfolio/
