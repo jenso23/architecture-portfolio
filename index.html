@@ -322,10 +322,8 @@
         <nav>
             <div class="nav-item">
                 <span class="nav-link">Projects ▾</span>
-                <div class="dropdown-menu">
-                    <a href="projekt-pavillon.html">Renovation of the Thannhausen Local History Museum</a>
-                    <a href="projekt-wohnhaus.html">New Housing - Starkenburg Barracks</a>
-                    <a href="projekt-kulturzentrum.html">Construction Innovation Center</a>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <!-- Dynamisch geladen aus content.json -->
                 </div>
             </div>
             <a href="cv.html" class="btn-cv">About Me</a>
@@ -333,10 +331,8 @@
     </header>
 
     <!-- Slider Navigationspunkte rechts -->
-    <div class="slider-controls">
-        <a href="#slide-1" class="dot-link active" title="Projekt 01"></a>
-        <a href="#slide-2" class="dot-link" title="Projekt 02"></a>
-        <a href="#slide-3" class="dot-link" title="Projekt 03"></a>
+    <div class="slider-controls" id="slider-controls">
+        <!-- Dynamisch geladen aus content.json -->
     </div>
 
     <!-- Scroll Hinweis unten -->
@@ -346,74 +342,62 @@
     </div>
 
     <!-- Fullscreen Slider Container -->
-    <main class="projects-slider">
-
-        <!-- PROJEKT 1 -->
-        <section id="slide-1" class="project-slide" style="background-image: url('Bilder/P4_Frontbild.jpg');">
-            <div class="slide-content">
-                <span class="project-category">Renovation & Conversion</span>
-                <h1 class="project-title">Renovation of the Thannhausen Local History Museum</h1>
-                <div class="project-meta">Timber Construction · Louvered Facade · 2023</div>
-                <p class="project-desc">
-                    Renovation and conversion of a small barn into a museum and event space for the village Thannhausen in southern Germany.
-                </p>
-                <!-- WICHTIG: Link auf die eigene Projekt-Unterseite -->
-                <a href="projekt-pavillon.html" class="project-btn">
-                    view project <span>→</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- PROJEKT 2 -->
-        <section id="slide-2" class="project-slide" style="background-image: url('Bilder/Kaserne_Frontbild.jpg');">
-             <div class="slide-content">
-                <span class="project-category">Urban Development & Area Change</span>
-                <h2 class="project-title">New Housing - Starkenburg Barracks</h2>
-                <div class="project-meta">Residential Blocks · Communal Open Spaces · 2024</div>
-                <p class="project-desc">
-                    Redevelopment of the Starkenburg Barracks in Darmstadt, an innovative neighborhood design is to be developed that creates high-quality and sustainable housing. This should meet the needs of future residents and foster appropriate interaction with the surrounding area.
-                </p>
-                <a href="projekt-wohnhaus.html" class="project-btn">
-                    view project <span>→</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- PROJEKT 3 -->
-        <section id="slide-3" class="project-slide" style="background-image: url('Bilder/Bachelor_Frontbild.jpg');">
-            <div class="slide-content">
-                <span class="project-category">New and Redesign of a University Campus</span>
-                <h2 class="project-title">Construction Innovation Center</h2>
-                <div class="project-meta">Competition Entry · Redesign & Modernization · 2025</div>
-                <p class="project-desc">
-                    Redesign and modernization of the Cooperative State University of Applied Sciences (DHBW) campus in Germany, including a new contruction innovation center.
-                </p>
-                <a href="projekt-kulturzentrum.html" class="project-btn">
-                    view project <span>→</span>
-                </a>
-            </div>
-        </section>
-
+    <main class="projects-slider" id="projects-slider">
+        <!-- Dynamisch geladen aus content.json -->
     </main>
 
-    <!-- Kleines Script für die aktive Punkt-Hervorhebung beim Scrollen -->
+    <!-- JavaScript: Lädt content.json und rendert die Projekte -->
     <script>
-        const slider = document.querySelector('.projects-slider');
-        const slides = document.querySelectorAll('.project-slide');
-        const dots = document.querySelectorAll('.dot-link');
+        fetch('content.json')
+            .then(response => response.json())
+            .then(data => {
+                const sliderContainer = document.getElementById('projects-slider');
+                const dropdownMenu = document.getElementById('dropdown-menu');
+                const sliderControls = document.getElementById('slider-controls');
 
-        slider.addEventListener('scroll', () => {
-            let current = 0;
-            const scrollPos = slider.scrollTop + window.innerHeight / 2;
-            slides.forEach((slide, index) => {
-                if (slide.offsetTop <= scrollPos) {
-                    current = index;
-                }
-            });
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === current);
-            });
-        });
+                // 1. Dropdown-Menü im Header befüllen
+                dropdownMenu.innerHTML = data.projects.map(project => `
+                    <a href="${project.detailLink}">${project.title}</a>
+                `).join('');
+
+                // 2. Control-Dots auf der rechten Seite erzeugen
+                sliderControls.innerHTML = data.projects.map((project, index) => `
+                    <a href="#slide-${index + 1}" class="dot-link ${index === 0 ? 'active' : ''}" title="${project.title}"></a>
+                `).join('');
+
+                // 3. Fullscreen Slides dynamisch erzeugen
+                sliderContainer.innerHTML = data.projects.map((project, index) => `
+                    <section id="slide-${index + 1}" class="project-slide" style="background-image: url('${project.coverImage}');">
+                        <div class="slide-content">
+                            <span class="project-category">${project.category}</span>
+                            <h2 class="project-title">${project.title}</h2>
+                            <div class="project-meta">${project.meta}</div>
+                            <p class="project-desc">${project.shortDescription}</p>
+                            <a href="${project.detailLink}" class="project-btn">
+                                view project <span>→</span>
+                            </a>
+                        </div>
+                    </section>
+                `).join('');
+
+                // 4. Scroll-Snap Event für die aktiven Dots rechts steuern
+                const slides = document.querySelectorAll('.project-slide');
+                const dots = document.querySelectorAll('.dot-link');
+
+                sliderContainer.addEventListener('scroll', () => {
+                    let current = 0;
+                    const scrollPos = sliderContainer.scrollTop + window.innerHeight / 2;
+                    slides.forEach((slide, index) => {
+                        if (slide.offsetTop <= scrollPos) {
+                            current = index;
+                        }
+                    });
+                    dots.forEach((dot, idx) => {
+                        dot.classList.toggle('active', idx === current);
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading content.json:', error));
     </script>
 </body>
 </html>
