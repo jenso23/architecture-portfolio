@@ -1,3 +1,26 @@
+# Architectural Portfolio – Jens Wölm
+
+A responsive, dynamic architectural portfolio website built with HTML, CSS, and vanilla JavaScript. All site content—including profile data, CV entries, and project details—is driven dynamically by a central JSON data structure.
+
+---
+
+## 🏛️ Project Overview
+
+This portfolio showcases selected architectural projects, conceptual drawings, and personal CV information for **Jens Wölm (B. Eng. Architecture)**. The site is hosted directly on **GitHub Pages** and emphasizes clean design, natural material aesthetics (wood tones and subtle warm grays), and seamless dynamic content loading.
+
+---
+
+## 📁 Repository Structure
+
+```text
+├── index.html                  # Homepage (Fullscreen snap-scroll project showcase)
+├── cv.html                     # Curriculum Vitae & About page
+├── projekt-pavillon.html       # Detail page: Local History Museum Thannhausen
+├── projekt-wohnhaus.html       # Detail page: Starkenburg Barracks Housing
+├── projekt-kulturzentrum.html  # Detail page: Construction Innovation Center
+├── content.json                # Central JSON data source for all text & metadata
+├── Bilder/                     # Image assets directory (Hero images, diagrams, plans)
+└── README.md                   # Project documentation
 How It Works (Architecture & Dynamic Fetching)
 Centralized Data Management (content.json)
 
