@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architektur Portfolio | Projekte</title>
+    
+    <!-- Typografie: Cinzel (Serife für Überschriften) & Plus Jakarta Sans (Clean Modern) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #171513;
+            --wood-primary: #c99369;
+            --wood-light: #f4ece4;
+            --text-light: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.75);
+            --border-glass: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow: hidden; /* Scrollen wird über den Container gesteuert */
+        }
+
+        h1, h2, h3, .logo, .slide-counter {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.8rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(15, 13, 11, 0.75) 0%, rgba(15, 13, 11, 0) 100%);
+            backdrop-filter: blur(4px);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--wood-primary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        /* Dropdown für Projekte */
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--wood-primary);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 130%;
+            right: 0;
+            background: rgba(28, 24, 21, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            padding: 0.8rem 0;
+            min-width: 240px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.4rem;
+            color: var(--wood-light);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(201, 147, 105, 0.15);
+            color: var(--wood-primary);
+        }
+
+        .btn-cv {
+            padding: 0.55rem 1.2rem;
+            border: 1px solid var(--wood-primary);
+            color: var(--wood-primary);
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cv:hover {
+            background: var(--wood-primary);
+            color: #171513;
+        }
+
+        /* --- Fullscreen Scroll Snap Container --- */
+        .projects-slider {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .project-slide {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Dunkler Gradient-Overlay für optimale Lesbarkeit */
+        .project-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg, 
+                rgba(18, 15, 13, 0.88) 0%, 
+                rgba(18, 15, 13, 0.55) 45%, 
+                rgba(18, 15, 13, 0.2) 100%
+            );
+            z-index: 1;
+        }
+
+        /* Vordergrund-Content */
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            margin-left: 8vw;
+            padding: 2.5rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .project-category {
+            display: inline-block;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--wood-primary);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-title {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .project-meta {
+            font-size: 0.95rem;
+            color: var(--wood-light);
+            opacity: 0.85;
+            margin-bottom: 1.2rem;
+            font-weight: 400;
+        }
+
+        .project-desc {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 2.2rem;
+            max-width: 520px;
+        }
+
+        /* CTA-Link zum Projekt */
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.9rem 2rem;
+            background-color: var(--wood-primary);
+            color: #171513;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .project-btn:hover {
+            background-color: #dfad85;
+            transform: translateX(4px);
+        }
+
+        /* --- Scroll Indikator & Quick Dots --- */
+        .slider-controls {
+            position: fixed;
+            right: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            z-index: 50;
+        }
+
+        .dot-link {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dot-link:hover, .dot-link.active {
+            background: var(--wood-primary);
+            transform: scale(1.4);
+        }
+
+        .scroll-hint {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            pointer-events: none;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -8px); }
+            60% { transform: translate(-50%, -4px); }
+        }
+
+        /* Responsive Anpassung */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.2rem 1.5rem;
+            }
+            .slide-content {
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+                padding: 1rem;
+            }
+            .slider-controls {
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <a href=cv.html" class="logo">Jens Wölm</a>
+        <nav>
+            <div class="nav-item">
+                <span class="nav-link">Projects ▾</span>
+                <div class="dropdown-menu">
+                    <a href="projekt-pavillon.html">Renovation of the Thannhausen Local History Museum</a>
+                    <a href="projekt-wohnhaus.html">New Housing - Starkenburg Barracks</a>
+                    <a href="projekt-kulturzentrum.html">Construction Innovation Center</a>
+                </div>
+            </div>
+            <a href="cv.html" class="btn-cv">About Me</a>
+        </nav>
+    </header>
+
+    <!-- Slider Navigationspunkte rechts -->
+    <div class="slider-controls">
+        <a href="#slide-1" class="dot-link active" title="Projekt 01"></a>
+        <a href="#slide-2" class="dot-link" title="Projekt 02"></a>
+        <a href="#slide-3" class="dot-link" title="Projekt 03"></a>
+    </div>
+
+    <!-- Scroll Hinweis unten -->
+    <div class="scroll-hint">
+        <span>Scrollen</span>
+        <span>↓</span>
+    </div>
+
+    <!-- Fullscreen Slider Container -->
+    <main class="projects-slider">
+
+        <!-- PROJEKT 1 -->
+        <section id="slide-1" class="project-slide" style="background-image: url('Bilder/P4_Frontbild.jpg');">
+            <div class="slide-content">
+                <span class="project-category">Renovation & Conversion</span>
+                <h1 class="project-title">Renovation of the Thannhausen Local History Museum</h1>
+                <div class="project-meta">Timber Construction · Louvered Facade · 2023</div>
+                <p class="project-desc">
+                    Renovation and conversion of a small barn into a museum and event space for the village Thannhausen in southern Germany.
+                </p>
+                <!-- WICHTIG: Link auf die eigene Projekt-Unterseite -->
+                <a href="projekt-pavillon.html" class="project-btn">
+                    view project <span>→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- PROJEKT 2 -->
+        <section id="slide-2" class="project-slide" style="background-image: url('Bilder/Kaserne_Frontbild.jpg');">
+             <div class="slide-content">
+                <span class="project-category">Urban Development & Area Change</span>
+                <h2 class="project-title">New Housing - Starkenburg Barracks</h2>
+                <div class="project-meta">Residential Blocks · Communal Open Spaces · 2024</div>
+                <p class="project-desc">
+                    Redevelopment of the Starkenburg Barracks in Darmstadt, an innovative neighborhood design is to be developed that creates high-quality and sustainable housing. This should meet the needs of future residents and foster appropriate interaction with the surrounding area.
+                </p>
+                <a href="projekt-wohnhaus.html" class="project-btn">
+                    view project <span>→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- PROJEKT 3 -->
+        <section id="slide-3" class="project-slide" style="background-image: url('Bilder/Bachelor_Frontbild.jpg');">
+            <div class="slide-content">
+                <span class="project-category">New and Redesign of a University Campus</span>
+                <h2 class="project-title">Construction Innovation Center</h2>
+                <div class="project-meta">Competition Entry · Redesign & Modernization · 2025</div>
+                <p class="project-desc">
+                    Redesign and modernization of the Cooperative State University of Applied Sciences (DHBW) campus in Germany, including a new contruction innovation center.
+                </p>
+                <a href="projekt-kulturzentrum.html" class="project-btn">
+                    view project <span>→</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Kleines Script für die aktive Punkt-Hervorhebung beim Scrollen -->
+    <script>
+        const slider = document.querySelector('.projects-slider');
+        const slides = document.querySelectorAll('.project-slide');
+        const dots = document.querySelectorAll('.dot-link');
+
+        slider.addEventListener('scroll', () => {
+            let current = 0;
+            const scrollPos = slider.scrollTop + window.innerHeight / 2;
+            slides.forEach((slide, index) => {
+                if (slide.offsetTop <= scrollPos) {
+                    current = index;
+                }
+            });
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === current);
+            });
+        });
+    </script>
+</body>
+</html>
