@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me & CV | Jens Wölm</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #f7f4ee;
+            --card-bg: #ffffff;
+            --text-main: #2b2623;
+            --text-muted: #6e655f;
+            --wood-primary: #8c5a3c;
+            --wood-hover: #70452c;
+            --wood-light: #e8ded1;
+            --border-color: #e0d6c8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        h1, h2, h3, h4, .logo {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.05em;
+        }
+
+        header {
+            position: sticky; top: 0;
+            background: rgba(247, 244, 238, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000; padding: 1.2rem 2.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem; font-weight: 700;
+            color: var(--wood-primary); text-decoration: none; text-transform: uppercase;
+        }
+
+        nav a {
+            text-decoration: none; color: var(--text-main); font-weight: 500;
+            margin-left: 2rem; font-size: 0.95rem; transition: color 0.3s ease;
+        }
+
+        nav a:hover, nav a.active { color: var(--wood-primary); }
+
+        .container { max-width: 1100px; margin: 3.5rem auto; padding: 0 2rem; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            text-decoration: none; color: var(--wood-primary);
+            font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover { transform: translateX(-4px); }
+
+        .about-grid {
+            display: grid; grid-template-columns: 260px 1fr; gap: 3.5rem;
+            background: var(--card-bg); padding: 3.5rem; border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); margin-bottom: 3rem;
+        }
+
+        .profile-side { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+        .profile-img-box {
+            width: 100%; height: 320px; border-radius: 6px; overflow: hidden;
+            border: 2px solid var(--wood-light); background-color: var(--wood-light);
+            margin-bottom: 1.2rem;
+        }
+
+        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .profile-side h2 { font-size: 1.5rem; color: var(--wood-primary); margin-bottom: 0.2rem; }
+        .profile-side .profile-title { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
+
+        .about-text h1 {
+            font-size: 1.8rem; color: var(--wood-primary); margin-bottom: 1.2rem;
+            border-bottom: 2px solid var(--wood-light); padding-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .bio-text { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.02rem; }
+
+        .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+
+        .cv-column h3 {
+            font-size: 1.2rem; color: var(--wood-primary); margin-bottom: 1.5rem;
+            position: relative; padding-bottom: 0.4rem; border-bottom: 2px solid var(--wood-light);
+            text-transform: uppercase;
+        }
+
+        .cv-item { margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border-color); }
+        .cv-item:last-child { border-bottom: none; }
+        .cv-year { font-weight: 600; color: var(--wood-primary); font-size: 0.88rem; margin-bottom: 0.2rem; }
+        .cv-detail strong { display: block; color: var(--text-main); font-size: 0.98rem; }
+        .cv-detail span { font-size: 0.88rem; color: var(--text-muted); }
+
+        .skills-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+            background: var(--card-bg); padding: 2.5rem 3.5rem; border-radius: 8px;
+            border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        .skills-column h3 {
+            font-size: 1.2rem; color: var(--wood-primary); margin-bottom: 1.2rem;
+            padding-bottom: 0.4rem; border-bottom: 2px solid var(--wood-light);
+            text-transform: uppercase;
+        }
+
+        .skill-list { list-style: none; }
+        .skill-list li {
+            display: flex; justify-content: space-between; padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border-color); font-size: 0.93rem;
+        }
+        .skill-list li:last-child { border-bottom: none; }
+        .skill-list span { color: var(--text-muted); }
+
+        footer { background: #231e1b; color: #d1c7bd; padding: 3.5rem 2rem 2rem; margin-top: 5rem; }
+        .footer-container {
+            max-width: 1100px; margin: 0 auto; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem;
+            padding-bottom: 2rem; border-bottom: 1px solid #3d3530;
+        }
+        .footer-col h4 { color: var(--wood-light); margin-bottom: 1rem; }
+        .footer-col p, .footer-col a { color: #a89d93; text-decoration: none; font-size: 0.9rem; display: block; margin-bottom: 0.4rem; }
+        .footer-col a:hover { color: var(--wood-light); }
+        .copyright { text-align: center; padding-top: 1.5rem; font-size: 0.8rem; color: #7a7067; }
+
+        @media (max-width: 850px) {
+            .about-grid, .cv-grid, .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-grid, .skills-grid { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Jens Wölm</a>
+        <nav>
+            <a href="index.html">← back to project overview</a>
+            <a href="cv.html" class="active">About Me</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← back to project overview</a>
+
+        <div class="about-grid">
+            <div class="profile-side">
+                <div class="profile-img-box">
+                    <img src="bilder/Passbild_Taiwan.jpeg" alt="Porträt Jens Wölm" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80';">
+                </div>
+                <!-- Dynamischer Name und Titel -->
+                <h2 id="profile-name">Loading...</h2>
+                <div class="profile-title" id="profile-degree">Loading...</div>
+            </div>
+
+            <div class="about-text">
+                <!-- Dynamische Überschrift & Bio -->
+                <h1 id="profile-header">Loading...</h1>
+                <p class="bio-text" id="profile-bio">Loading...</p>
+
+                <div class="cv-grid">
+                    <div class="cv-column">
+                        <h3>Education</h3>
+                        <div id="education-container"></div>
+                    </div>
+
+                    <div class="cv-column">
+                        <h3>Experience</h3>
+                        <div id="experience-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skills-column">
+                <h3>Languages</h3>
+                <ul class="skill-list" id="languages-container"></ul>
+            </div>
+
+            <div class="skills-column">
+                <h3>Software Skills</h3>
+                <ul class="skill-list" id="skills-container"></ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Jens Wölm</p>
+                <p>Musterstraße 12</p>
+                <p>69120 Heidelberg</p>
+            </div>
+            <div class="footer-col">
+                <h4>Accessibility</h4>
+                <a href="mailto:hallo@architekt-portfolio.de">hallo@architekt-portfolio.de</a>
+                <p>+49 (0) 123 456 789</p>
+            </div>
+            <div class="footer-col">
+                <h4>Social Media</h4>
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">Instagram</a>
+                <a href="#" target="_blank">Behance</a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 Jens Wölm – Alle Rechte vorbehalten.
+        </div>
+    </footer>
+
+    <!-- JavaScript: Lädt content.json und rendert die Inhalte -->
+    <script>
+        fetch('content.json')
+            .then(response => response.json())
+            .then(data => {
+                // Profil-Daten setzen
+                document.getElementById('profile-name').textContent = data.profile.name;
+                document.getElementById('profile-degree').textContent = data.profile.title;
+                document.getElementById('profile-header').textContent = data.profile.header;
+                document.getElementById('profile-bio').textContent = data.profile.bio;
+
+                // Education rendern
+                const eduContainer = document.getElementById('education-container');
+                eduContainer.innerHTML = data.education.map(item => `
+                    <div class="cv-item">
+                        <div class="cv-year">${item.year}</div>
+                        <div class="cv-detail">
+                            <strong>${item.degree}</strong>
+                            <span>${item.institution}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Experience rendern
+                const expContainer = document.getElementById('experience-container');
+                expContainer.innerHTML = data.experience.map(item => `
+                    <div class="cv-item">
+                        <div class="cv-year">${item.year}</div>
+                        <div class="cv-detail">
+                            <strong>${item.role}</strong>
+                            <span>${item.company}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Languages rendern
+                const langContainer = document.getElementById('languages-container');
+                langContainer.innerHTML = data.languages.map(item => `
+                    <li><strong>${item.name}</strong> <span>${item.level}</span></li>
+                `).join('');
+
+                // Software Skills rendern
+                const skillsContainer = document.getElementById('skills-container');
+                skillsContainer.innerHTML = data.softwareSkills.map(item => `
+                    <li><strong>${item.category}</strong> <span>${item.tools}</span></li>
+                `).join('');
+            })
+            .catch(error => console.error('Error loading content.json:', error));
+    </script>
+
+</body>
+</html>
