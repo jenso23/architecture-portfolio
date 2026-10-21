@@ -50,5 +50,34 @@
     { "category": "CAD / BIM", "tools": "Vectorworks, AutoCAD" },
     { "category": "3D Modeling / Rendering", "tools": "Rhino, Enscape, Lumion" },
     { "category": "Graphic & Publishing", "tools": "Photoshop, InDesign, Illustrator" }
+  ],
+  "projects": [
+    {
+      "id": "pavillon",
+      "title": "Renovation of the Thannhausen Local History Museum",
+      "category": "Renovation & Conversion",
+      "meta": "Timber Construction · Louvered Facade · 2023",
+      "coverImage": "Bilder/P4_Frontbild.jpg",
+      "detailLink": "projekt-pavillon.html",
+      "shortDescription": "Renovation and conversion of a small barn into a museum and event space for the village Thannhausen in southern Germany."
+    },
+    {
+      "id": "wohnhaus",
+      "title": "New Housing - Starkenburg Barracks",
+      "category": "Urban Development & Area Change",
+      "meta": "Residential Blocks · Communal Open Spaces · 2024",
+      "coverImage": "Bilder/Kaserne_Frontbild.jpg",
+      "detailLink": "projekt-wohnhaus.html",
+      "shortDescription": "Redevelopment of the Starkenburg Barracks in Darmstadt, an innovative neighborhood design is to be developed that creates high-quality and sustainable housing. This should meet the needs of future residents and foster appropriate interaction with the surrounding area."
+    },
+    {
+      "id": "kulturzentrum",
+      "title": "Construction Innovation Center",
+      "category": "New and Redesign of a University Campus",
+      "meta": "Competition Entry · Redesign & Modernization · 2025",
+      "coverImage": "Bilder/Bachelor_Frontbild.jpg",
+      "detailLink": "projekt-kulturzentrum.html",
+      "shortDescription": "Redesign and modernization of the Cooperative State University of Applied Sciences (DHBW) campus in Germany, including a new contruction innovation center."
+    }
   ]
 }
