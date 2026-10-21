@@ -79,5 +79,73 @@
       "detailLink": "projekt-kulturzentrum.html",
       "shortDescription": "Redesign and modernization of the Cooperative State University of Applied Sciences (DHBW) campus in Germany, including a new contruction innovation center."
     }
-  ]
+  ],
+  "projectDetails": {
+    "pavillon": {
+      "title": "Renovation of the Thannhausen Local History Museum",
+      "subtitle": "Timber Construction · Louvered Facade · 2023",
+      "heroImage": "Bilder/P4_Frontbild.jpg",
+      "meta": {
+        "typology": "Renovation & Conversion",
+        "material": "Timber Construction & Louvered Facade",
+        "location": "Thannhausen, Germany",
+        "year": "2023"
+      },
+      "story": [
+        "Renovation and conversion of a small barn into a museum and event space for the village Thannhausen in southern Germany."
+      ],
+      "gallery": [
+        { "src": "Bilder/P4_Grundriss.jpg", "caption": "Floor Plan & Details" }
+      ],
+      "nextProjectLink": "projekt-wohnhaus.html",
+      "nextProjectTitle": "New Housing - Starkenburg Barracks"
+    },
+    "wohnhaus": {
+      "title": "New Housing - Starkenburg Barracks",
+      "subtitle": "Residential Blocks & Communal Open Spaces",
+      "heroImage": "Bilder/Kaserne_Frontbild.jpg",
+      "meta": {
+        "typology": "Urban Planning & Zoning",
+        "material": "Timber Construction & Perforated Clay Bricks",
+        "location": "Darmstadt, Germany",
+        "year": "2024"
+      },
+      "story": [
+        "As a part of the redevelopment of the Starkenburg Barracks in Darmstadt, an innovative neighborhood design is to be developed that creates high-quality and sustainable housing. This should meet the needs of future residents and foster appropriate interaction with the surrounding area.",
+        "The neighborhood concept includes the construction of three four-storey residential blocks, each consisting of three two-storey tower blocks, whose dimensions are adapted to the surrounding, small-scale structures of the forest colony. Targeted incisions and zoning create attractive interstices that offer both private and communal open spaces."
+      ],
+      "gallery": [
+        { "src": "Bilder/A0_Jens_Projekt5_Abgabe-images-3.jpg", "caption": "Analysis & Site Plan" },
+        { "src": "Bilder/A0_Jens_Projekt5_Abgabe-images-0.jpg", "caption": "Ground Floor & Elevations" },
+        { "src": "Bilder/A0_Jens_Projekt5_Abgabe-images-1.jpg", "caption": "Second Floor & Elevations" },
+        { "src": "Bilder/A0_Jens_Projekt5_Abgabe-images-2.jpg", "caption": "Fourth Floor & Elevations" },
+        { "src": "Bilder/A0_Jens_Projekt5_Abgabe-images-4.jpg", "caption": "Construction & Materials" },
+        { "src": "Bilder/A0_Jens_Projekt5_Abgabe-images-5.jpg", "caption": "Concept & Typology" }
+      ],
+      "nextProjectLink": "projekt-kulturzentrum.html",
+      "nextProjectTitle": "Construction Innovation Center"
+    },
+    "kulturzentrum": {
+      "title": "Construction Innovation Center",
+      "subtitle": "Competition Entry, Redesign & Modernization",
+      "heroImage": "Bilder/Bachelor_Frontbild.jpg",
+      "meta": {
+        "typology": "Redesign & Modernization",
+        "material": "Post-&-Beam Facade & Wooden Stack Ceiling",
+        "location": "Mosbach, Germany",
+        "year": "2025"
+      },
+      "story": [
+        "The task was a real project commisioned by the DHBW (Cooperative State University of Applied Sciences), which wanted to plan a new construction innovation center on its campus. The entire campus was also to be redesigned and modernized.",
+        "My design for the new Building Innovation Center of the DHBW in Mosbach marks the new milestone of the campus. With new work, teaching, and open spaces, it offers students and faculty flexible use. A post-and-beam facade on the north and east sides will provide a view into the building from the campus, while a more tranquil perforated facade on the south and west sides will provide a welcoming environment. The facade will be covered with climbing plants at the transition points."
+      ],
+      "gallery": [
+        { "src": "Bilder/FINAL-1.jpg", "caption": "Site Plan & Concept" },
+        { "src": "Bilder/FINAL-2.jpg", "caption": "Floor Plans & Elevations" },
+        { "src": "Bilder/FINAL-3.jpg", "caption": "Construction & Materials" }
+      ],
+      "nextProjectLink": "projekt-pavillon.html",
+      "nextProjectTitle": "Renovation of the Thannhausen Local History Museum"
+    }
+  }
 }
