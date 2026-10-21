@@ -175,4 +175,89 @@
         </div>
     </main>
 
-    <div id="imageModal" class="modal"
+    <!-- Lightbox Modal Container -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg" alt="Vergrößerte Ansicht">
+    </div>
+
+    <!-- JavaScript liest 'wohnhaus' dynamisch aus content.json aus -->
+    <script>
+        fetch('content.json')
+            .then(response => response.json())
+            .then(data => {
+                const detail = data.projectDetails.wohnhaus;
+
+                // Hero-Bereich setzen
+                document.getElementById('project-hero').style.backgroundImage = `url('${detail.heroImage}')`;
+                document.getElementById('hero-title').textContent = detail.title;
+                document.getElementById('hero-subtitle').textContent = detail.subtitle;
+
+                // Metadaten setzen
+                document.getElementById('meta-typology').textContent = detail.meta.typology;
+                document.getElementById('meta-material').textContent = detail.meta.material;
+                document.getElementById('meta-location').textContent = detail.meta.location;
+                document.getElementById('meta-year').textContent = detail.meta.year;
+
+                // Beschreibung/Story setzen
+                const storyContainer = document.getElementById('project-story');
+                storyContainer.innerHTML = detail.story.map((paragraph, index) => `
+                    <p ${index > 0 ? 'style="margin-top: 1.2rem;"' : ''}>${paragraph}</p>
+                `).join('');
+
+                // Galerie setzen
+                const galleryContainer = document.getElementById('gallery-grid');
+                galleryContainer.innerHTML = detail.gallery.map(item => `
+                    <div class="gallery-card">
+                        <img src="${item.src}" alt="${item.caption}">
+                        <div class="gallery-caption">${item.caption}</div>
+                    </div>
+                `).join('');
+
+                // Link zum nächsten Projekt setzen
+                const nextLink = document.getElementById('next-project-link');
+                nextLink.href = detail.nextProjectLink;
+                nextLink.textContent = `next project: ${detail.nextProjectTitle} →`;
+
+                // Event-Listener für Galerie-Bild-Klicks
+                document.querySelectorAll('.gallery-card img').forEach(img => {
+                    img.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        modal.style.display = 'flex';
+                        modalImg.src = this.src;
+                        modalImg.alt = this.alt;
+                    });
+                });
+            })
+            .catch(error => console.error('Error loading content.json:', error));
+
+        // Lightbox Modal Steuerung
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+
+        modalImg.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('zoomed');
+        });
+
+        modalImg.addEventListener('mousemove', function(e) {
+            if (this.classList.contains('zoomed')) {
+                const rect = this.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                this.style.transformOrigin = `${x}% ${y}%`;
+            }
+        });
+
+        function closeModal() {
+            modal.style.display = 'none';
+            modalImg.classList.remove('zoomed');
+            modalImg.style.transformOrigin = 'center center';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
