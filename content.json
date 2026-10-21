@@ -95,7 +95,9 @@
         "Renovation and conversion of a small barn into a museum and event space for the village Thannhausen in southern Germany."
       ],
       "gallery": [
-        { "src": "Bilder/P4_Grundriss.jpg", "caption": "Floor Plan & Details" }
+    { "src": "Bilder/P4_A1_Blatt_2.jpg", "caption": "Floor Plans & Elevations" },
+    { "src": "Bilder/P4_A1_Blatt_3.jpg", "caption": "Sections & Details" },
+    { "src": "Bilder/P4_A1_Blatt_4.jpg", "caption": "Construction & Materials" }
       ],
       "nextProjectLink": "projekt-wohnhaus.html",
       "nextProjectTitle": "New Housing - Starkenburg Barracks"
